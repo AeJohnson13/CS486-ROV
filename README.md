@@ -2,7 +2,8 @@
 
 ## Purpose
   This Repository contains all of the source files used within my ROV simulator. 
-  It was made for the University of Alaska Fairbanks CS486 Computer Graphics Animation & Simulation
+  
+  It was made for the University of Alaska Fairbanks CS F486 Computer Graphics Animation & Simulation final project as well as OCN F111X final project 
 
   Inspiration for the project was the work being done by [EV/Natuilus](https://nautiluslive.org/) specifically [the footage of their dive](https://www.youtube.com/watch?v=CZzQhiNQXxU) done in October 2019 on the whalefall at the Davidson Seamount
 
