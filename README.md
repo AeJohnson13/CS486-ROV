@@ -6,6 +6,8 @@
 
   Inspiration for the project was the work being done by [EV/Natuilus](https://nautiluslive.org/) specifically [the footage of their dive](https://www.youtube.com/watch?v=CZzQhiNQXxU) done in October 2019 on the whalefall at the Davidson Seamount
 
+  Footage of the Simulator running can be found [>here<](https://www.youtube.com/watch?v=X8mR3FNYswM)
+  
 ## Photos of the Scene Tree Structure
 ### Whale Fall Level Scene Tree Structure
 <img src=https://github.com/AeJohnson13/CS486-ROV/blob/main/Screenshot%202024-12-09%20202459.png> 
