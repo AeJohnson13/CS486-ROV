@@ -4,7 +4,7 @@
   This Repository contains all of the source files used within my ROV simulator. 
   It was made for the University of Alaska Fairbanks CS486 Computer Graphics Animation & Simulation
 ## Footage of it Running
-<iframe width="560" height="315" src="https://www.youtube.com/embed/X8mR3FNYswM?si=o4wpkP6MlH-A6PjH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![IMAGE ALT TEXT](https://www.youtube.com/watch?v=X8mR3FNYswM&t=5s/0.jpg)](https://www.youtube.com/watch?v=X8mR3FNYswM&t=5s)
 
 ## Photos of the Scene Tree Structure
 ### Whale Fall Level Scene Tree Structure
