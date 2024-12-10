@@ -1,0 +1,78 @@
+[gd_scene load_steps=4 format=3 uid="uid://u2x21pwm12ft"]
+
+[ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_oq45p"]
+[ext_resource type="Shader" path="res://Shaders/blue.gdshader" id="2_v80kh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kl7p6"]
+shader = ExtResource("2_v80kh")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oq45p")
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kl7p6")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.998
+anchor_bottom = 1.0
+offset_right = 0.303955
+
+[node name="StartButton" type="Button" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.468
+anchor_top = 0.464
+anchor_right = 0.533
+anchor_bottom = 0.536
+offset_left = 39.3268
+offset_top = 23.38
+offset_right = -39.2434
+offset_bottom = -23.38
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Start
+"
+
+[node name="ExitButton" type="Button" parent="Background"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.433
+anchor_top = 0.641
+anchor_right = 0.573
+anchor_bottom = 0.712
+offset_left = 71.171
+offset_top = -0.280029
+offset_right = -72.1339
+offset_bottom = 0.039978
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Don't Start
+"
+
+[node name="TitleText" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.354
+anchor_top = 0.155
+anchor_right = 0.647
+anchor_bottom = 0.257
+offset_left = 232.804
+offset_top = 0.0400085
+offset_right = -232.72
+offset_bottom = -74.12
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "ROV Simulator"

@@ -1,0 +1,334 @@
+[gd_scene load_steps=23 format=3 uid="uid://h6iuewkx3r8q"]
+
+[ext_resource type="Script" path="res://Scripts/ROV_Control.gd" id="1_cbmaf"]
+[ext_resource type="PackedScene" uid="uid://dhfi8alqydfxh" path="res://Scenes/right_arm.tscn" id="2_r7u51"]
+[ext_resource type="PackedScene" uid="uid://cngjfr8aasrdo" path="res://Models/Herc_low_poly.glb" id="4_hnrn7"]
+[ext_resource type="Script" path="res://Scripts/light_bar.gd" id="4_v522v"]
+[ext_resource type="Script" path="res://Scripts/camera_controller.gd" id="4_vgvx4"]
+[ext_resource type="Shader" path="res://Shaders/ROV.gdshader" id="6_p055j"]
+[ext_resource type="Texture2D" uid="uid://bpdef21dagjew" path="res://Textures/arrow.png" id="8_o182d"]
+[ext_resource type="Script" path="res://Scripts/compass.gd" id="9_dangq"]
+[ext_resource type="Script" path="res://Scripts/Depth Meter.gd" id="9_ni5ee"]
+[ext_resource type="Script" path="res://Scripts/Pressure_guage.gd" id="10_dt3w0"]
+[ext_resource type="Texture2D" uid="uid://crulndx2jw6vj" path="res://Textures/Red.png" id="11_nnrsx"]
+[ext_resource type="Texture2D" uid="uid://co532gal10i4" path="res://Textures/black.png" id="12_vai38"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nydb4"]
+size = Vector3(2.55273, 1.40375, 1.15509)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5axd0"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.1
+
+[sub_resource type="Environment" id="Environment_8d7ru"]
+background_mode = 1
+background_energy_multiplier = 16.0
+ambient_light_energy = 0.0
+tonemap_mode = 1
+ssr_fade_in = 0.0284197
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
+fog_depth_begin = 50.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+adjustment_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l42fu"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_cocm4"]
+material = SubResource("StandardMaterial3D_l42fu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_volgk"]
+shader = ExtResource("6_p055j")
+
+[sub_resource type="BoxMesh" id="BoxMesh_v6pc6"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1xolq"]
+emission_shape = 3
+emission_box_extents = Vector3(2, 1, 2)
+angle_min = 22.0
+angle_max = 22.0
+spread = 82.5
+gravity = Vector3(0, -0.001, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygtii"]
+cull_mode = 2
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aseid"]
+lightmap_size_hint = Vector2i(2, 2)
+material = SubResource("StandardMaterial3D_ygtii")
+size = Vector2(0.005, 0.005)
+orientation = 0
+
+[node name="ROV_Root" type="RigidBody3D"]
+mass = 2498.0
+gravity_scale = 0.0
+script = ExtResource("1_cbmaf")
+
+[node name="ROV Collision Box" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0244141, 0.58909, -0.0242004)
+shape = SubResource("BoxShape3D_nydb4")
+
+[node name="ROV Arm Root" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.826925, 0.196539, 0.642574)
+
+[node name="robot right arm 6" parent="ROV Arm Root" instance=ExtResource("2_r7u51")]
+transform = Transform3D(0.07, 0, 0, 0, -3.0598e-09, 0.07, 0, -0.07, -3.0598e-09, 0, 0, 0)
+
+[node name="ROV Mesh" parent="." instance=ExtResource("4_hnrn7")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.424566, 0, 0)
+
+[node name="ROV Lights" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ROV Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.683344, 0)
+omni_range = 4.0
+omni_shadow_mode = 0
+
+[node name="Light Bar" type="Node3D" parent="ROV Lights"]
+script = ExtResource("4_v522v")
+spotlight_range = 40
+spotlight_attenuation = 1
+spotlight_angle = 45
+spotlight_angle_attenuation = 2.0
+spotlight_color = Color(1, 1, 1, 1)
+spotlight_energy = 2.0
+
+[node name="Light Can 2" type="MeshInstance3D" parent="ROV Lights/Light Bar"]
+transform = Transform3D(0.34202, -0.939693, 0, 0.939693, 0.34202, 0, 0, 0, 1, 1.67314, 0.958017, -0.422238)
+mesh = SubResource("CylinderMesh_5axd0")
+skeleton = NodePath("../../..")
+
+[node name="Spotlight 1" type="SpotLight3D" parent="ROV Lights/Light Bar/Light Can 2"]
+transform = Transform3D(1, 0, -2.98023e-08, 2.98023e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0.00207257, -0.00569344, -0.0209522)
+light_energy = 2.0
+spot_range = 40.0
+spot_angle_attenuation = 2.0
+
+[node name="Light Can" type="MeshInstance3D" parent="ROV Lights/Light Bar"]
+transform = Transform3D(0.34202, -0.939693, 0, 0.939693, 0.34202, 0, 0, 0, 1, 1.68764, 0.958, 0.411208)
+mesh = SubResource("CylinderMesh_5axd0")
+skeleton = NodePath("../../..")
+
+[node name="Spotlight 2" type="SpotLight3D" parent="ROV Lights/Light Bar/Light Can"]
+transform = Transform3D(1, 0, -2.98023e-08, 2.98023e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, -0.00996029, 0.0105536, 0.0199301)
+light_energy = 2.0
+spot_range = 40.0
+spot_angle_attenuation = 2.0
+
+[node name="Light Can 3" type="MeshInstance3D" parent="ROV Lights/Light Bar"]
+transform = Transform3D(0.81245, -0.583031, 0, 0.583031, 0.81245, 0, 0, 0, 1, 1.67314, 0.958017, -0.520672)
+mesh = SubResource("CylinderMesh_5axd0")
+skeleton = NodePath("../../..")
+
+[node name="Spotlight 3" type="SpotLight3D" parent="ROV Lights/Light Bar/Light Can 3"]
+transform = Transform3D(1, 0, -2.98023e-08, 2.98023e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0.00207257, -0.00569344, -0.0209522)
+light_energy = 2.0
+spot_range = 40.0
+spot_angle_attenuation = 2.0
+
+[node name="Light Can 4" type="MeshInstance3D" parent="ROV Lights/Light Bar"]
+transform = Transform3D(0.810553, -0.585665, 0, 0.585665, 0.810553, 0, 0, 0, 1, 1.68764, 0.958, 0.514634)
+mesh = SubResource("CylinderMesh_5axd0")
+skeleton = NodePath("../../..")
+
+[node name="Spotlight 4" type="SpotLight3D" parent="ROV Lights/Light Bar/Light Can 4"]
+transform = Transform3D(1, 0, -2.98023e-08, 2.98023e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, -0.00996029, 0.0105536, 0.0199301)
+light_energy = 2.0
+spot_range = 40.0
+spot_angle_attenuation = 2.0
+
+[node name="ROV Camera Controller" type="Node3D" parent="."]
+script = ExtResource("4_vgvx4")
+
+[node name="Down_Camera" type="Camera3D" parent="ROV Camera Controller"]
+transform = Transform3D(7.12641e-09, 0.98662, 0.163034, 4.31266e-08, -0.163034, 0.98662, 1, 2.15914e-14, -4.37114e-08, 1.42363, 0.994338, 0)
+environment = SubResource("Environment_8d7ru")
+fov = 45.0
+far = 50.0
+
+[node name="Forward_Camera" type="Camera3D" parent="ROV Camera Controller"]
+transform = Transform3D(-4.30024e-08, 0.179369, -0.983782, 7.84043e-09, 0.983782, 0.179369, 1, 2.39808e-14, -4.37113e-08, 0.59225, 0.534563, 0)
+environment = SubResource("Environment_8d7ru")
+
+[node name="UI Elements" type="Node3D" parent="ROV Camera Controller"]
+
+[node name="ColorRect" type="ColorRect" parent="ROV Camera Controller/UI Elements"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.266667, 0.478431, 0.823529, 0.156863)
+
+[node name="Compass" type="Label" parent="ROV Camera Controller/UI Elements"]
+anchors_preset = -1
+anchor_left = 0.868
+anchor_top = 0.046
+anchor_right = 0.908
+anchor_bottom = 0.082
+offset_left = -1.55994
+offset_top = 11.32
+offset_right = 7.64001
+offset_bottom = 14.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "North
+"
+
+[node name="Compass Base" type="MeshInstance2D" parent="ROV Camera Controller/UI Elements/Compass"]
+position = Vector2(41.016, 114.852)
+scale = Vector2(140, 140)
+mesh = SubResource("SphereMesh_cocm4")
+
+[node name="Compass Arrow" type="Sprite2D" parent="ROV Camera Controller/UI Elements/Compass/Compass Base"]
+material = SubResource("ShaderMaterial_volgk")
+position = Vector2(0.0185194, -0.0202017)
+scale = Vector2(0.00166667, 0.00166667)
+texture = ExtResource("8_o182d")
+script = ExtResource("9_dangq")
+
+[node name="Depth Meter Label" type="Label" parent="ROV Camera Controller/UI Elements"]
+anchors_preset = -1
+anchor_left = 0.866
+anchor_top = 0.25
+anchor_right = 0.912
+anchor_bottom = 0.289
+offset_left = -2.71997
+offset_right = -2.03992
+offset_bottom = -0.119995
+theme_override_font_sizes/font_size = 30
+text = "Depth
+"
+
+[node name="ColorRect" type="ColorRect" parent="ROV Camera Controller/UI Elements/Depth Meter Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.112
+anchor_top = 1.19
+anchor_right = 1.202
+anchor_bottom = 2.5
+offset_left = -0.0318642
+offset_top = 0.0199966
+offset_right = 0.0219727
+
+[node name="Depth Meter" type="Label" parent="ROV Camera Controller/UI Elements/Depth Meter Label/ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.018
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.0530001
+offset_top = 0.00999993
+offset_right = 2.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "DEPTH"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_ni5ee")
+
+[node name="Pressure" type="Label" parent="ROV Camera Controller/UI Elements"]
+anchors_preset = -1
+anchor_left = 0.858
+anchor_top = 0.378
+anchor_right = 0.927
+anchor_bottom = 0.456
+offset_left = 1.64001
+offset_top = -0.240021
+offset_right = 0.159912
+offset_bottom = -0.480011
+theme_override_font_sizes/font_size = 30
+text = "Pressure"
+
+[node name="Pressure Gauge" type="MeshInstance2D" parent="ROV Camera Controller/UI Elements/Pressure"]
+position = Vector2(62, 117)
+scale = Vector2(140, 140)
+mesh = SubResource("SphereMesh_cocm4")
+
+[node name="Needle Root" type="Node2D" parent="ROV Camera Controller/UI Elements/Pressure/Pressure Gauge"]
+position = Vector2(0.00702946, 0.372486)
+script = ExtResource("10_dt3w0")
+
+[node name="Needle" type="MeshInstance2D" parent="ROV Camera Controller/UI Elements/Pressure/Pressure Gauge/Needle Root"]
+z_index = 1
+position = Vector2(-2.34693e-07, -0.281697)
+scale = Vector2(0.0535717, 0.650893)
+mesh = SubResource("BoxMesh_v6pc6")
+texture = ExtResource("11_nnrsx")
+
+[node name="Pressure Gauge2" type="MeshInstance2D" parent="ROV Camera Controller/UI Elements/Pressure/Pressure Gauge/Needle Root"]
+scale = Vector2(0.12, 0.12)
+mesh = SubResource("SphereMesh_cocm4")
+texture = ExtResource("12_vai38")
+
+[node name="Pressure Display" type="Label" parent="ROV Camera Controller/UI Elements/Pressure"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.244
+anchor_top = 0.643
+anchor_right = 0.687
+anchor_bottom = 0.929
+offset_left = 0.0361118
+offset_top = -0.012001
+offset_right = 0.00311279
+offset_bottom = -0.0360107
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="Key" type="Label" parent="ROV Camera Controller/UI Elements/Pressure"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.046
+anchor_top = 1.179
+anchor_right = 0.168
+anchor_bottom = 1.345
+offset_left = 0.0261221
+offset_top = -0.0359955
+offset_right = -0.00787926
+offset_bottom = 0.0200195
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "0 ATA"
+
+[node name="Key2" type="Label" parent="ROV Camera Controller/UI Elements/Pressure"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.71
+anchor_top = 1.238
+anchor_right = 1.0
+anchor_bottom = 1.405
+offset_left = -0.00988007
+offset_top = 0.00797272
+offset_right = 1.00012
+offset_bottom = -0.0200195
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "300 ATA"
+
+[node name="Particles" type="Node3D" parent="."]
+
+[node name="Marine Snow Particles" type="GPUParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.07096, 0.717194, 0)
+amount = 200
+lifetime = 10.0
+preprocess = 8.0
+process_material = SubResource("ParticleProcessMaterial_1xolq")
+draw_pass_1 = SubResource("PlaneMesh_aseid")
